@@ -6,11 +6,13 @@ public class Quick {
    int pivot = (int)(Math.random() * (end - start + 1)) + start;
    // bring pivot element to index 0
    int temp = data[start];
-   data[start] = data[pivot];
-   data[pivot] = temp;
-   // variables
-   pivot = 0;
-   start += 1;
+   if (pivot != start) {
+     data[start] = data[pivot];
+     data[pivot] = temp;
+     // variables
+     pivot = 0;
+     start += 1;
+   }
    //  System.out.println("O: " + Arrays.toString(data));
    while (start != end) {
      if (data[start] > data[pivot]) {
@@ -40,5 +42,15 @@ public class Quick {
    return pivot;
  }
 
+ /*return the value that is the kth smallest value of the array.
+ */
+ public static int quickselect (int[] data, int k){
+   return -1;
+ }
+
+ public static void main(String[] args) {
+   int[] test = new int[] { 99,99,99,1,99,99,99 };
+   System.out.println(Quick.partition(test, 3,3));
+ }
 
 }
