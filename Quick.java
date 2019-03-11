@@ -1,5 +1,6 @@
-public class Quick {
+import java.util.*;
 
+public class Quick {
 
   public static int partition (int [] data, int start, int end) {
    // generate random pivot index
@@ -45,15 +46,19 @@ public class Quick {
  /*return the value that is the kth smallest value of the array.
  */
  public static int quickselect (int[] data, int k){
-   int pivot = partition(data, 0,0);
+   int start = 0;
+   int end = data.length - 1;
+   int pivot = partition(data, start, end);
    while (pivot != k) {
+     System.out.println(Arrays.toString(data));
      if (pivot < k) {
-       pivot = partition(data, start, pivot - 1);
+       end = pivot - 1;
      } else {
-       pivot = partition(data, pivot + 1, end);
+       start = pivot + 1;
      }
+     pivot = partition(data, start, end);
    }
-   return data[pivot]; 
+   return data[pivot];
  // return quickH(data,k,0,data.length-1);
  }
  /*
@@ -70,6 +75,6 @@ public class Quick {
 
  public static void main(String[] args) {
    int[] test = new int[] { 2, 3, 4, 6, 1, 8, 9, 5, 7 };
-   System.out.println(Quick.partition(test,0,3));
+   System.out.println(Quick.quickselect(test, 5));
  }
 }
