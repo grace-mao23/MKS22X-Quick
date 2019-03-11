@@ -45,7 +45,18 @@ public class Quick {
  /*return the value that is the kth smallest value of the array.
  */
  public static int quickselect (int[] data, int k){
-   return -1;
+   return quickH(data,k,0,data.length-1);
+ }
+
+ public static int quickH(int[] data, int k, int start, int end) {
+   int pivot = partition(data,start,end);
+   if (pivot == k) {
+     return data[pivot];
+   }
+   if (pivot < k) {
+     return quickH(data, k, pivot + 1, end);
+   }
+   return quickH(data, k, start, pivot - 1);
  }
 
  public static void main(String[] args) {
