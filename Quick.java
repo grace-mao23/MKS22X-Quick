@@ -5,16 +5,17 @@ public class Quick {
   public static int partition (int [] data, int start, int end) {
    // generate random pivot index
    int pivot = (int)(Math.random() * (end - start + 1)) + start;
+  // System.out.println("Pivot: " +pivot);
    // bring pivot element to index 0
    int temp = data[start];
    if (pivot != start) {
      data[start] = data[pivot];
      data[pivot] = temp;
      // variables
-     pivot = 0;
+     pivot = start;
      start += 1;
    }
-   //  System.out.println("O: " + Arrays.toString(data));
+  // System.out.println("O: " + Arrays.toString(data));
    while (start != end) {
      if (data[start] > data[pivot]) {
        // switch start and end
@@ -25,21 +26,23 @@ public class Quick {
      } else {
        start += 1;
      }
-   //  System.out.println(Arrays.toString(data));
+    // System.out.println("A:"+Arrays.toString(data)+ " "+ start+", "+ end);
    }
    // switching pivot to the right place
    if (data[start] <= data[pivot]) {
+     //System.out.println("blah");
      int t = data[start];
      data[start] = data[pivot];
      data[pivot] = t;
      pivot = start;
    } else {
+    // System.out.println("lah");
      int t = data[start-1];
      data[start-1] = data[pivot];
      data[pivot] = t;
      pivot = start-1;
    }
-   //    System.out.println(Arrays.toString(data));
+  // System.out.println(Arrays.toString(data));
    return pivot;
  }
 
@@ -50,12 +53,14 @@ public class Quick {
    int end = data.length - 1;
    int pivot = partition(data, start, end);
    while (pivot != k) {
-     System.out.println(Arrays.toString(data));
-     if (pivot < k) {
+    // System.out.println(Arrays.toString(data)+": "+start+","+end);
+     if (pivot > k) {
        end = pivot - 1;
      } else {
        start = pivot + 1;
      }
+     //System.out.println(start+","+end);
+    // System.out.println("Data: "+Arrays.toString(data));
      pivot = partition(data, start, end);
    }
    return data[pivot];
@@ -75,6 +80,16 @@ public class Quick {
 
  public static void main(String[] args) {
    int[] test = new int[] { 2, 3, 4, 6, 1, 8, 9, 5, 7 };
+   // sorted { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+   System.out.println(Quick.quickselect(test, 0));
+   System.out.println(Quick.quickselect(test, 1));
+   System.out.println(Quick.quickselect(test, 2));
+   System.out.println(Quick.quickselect(test, 3));
+   System.out.println(Quick.quickselect(test, 4));
    System.out.println(Quick.quickselect(test, 5));
+   System.out.println(Quick.quickselect(test, 6));
+   System.out.println(Quick.quickselect(test, 7));
+   System.out.println(Quick.quickselect(test, 8));
+  //  System.out.println(Quick.partition(test, 3, 8));
  }
 }
