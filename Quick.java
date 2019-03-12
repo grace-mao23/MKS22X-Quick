@@ -78,6 +78,18 @@ public class Quick {
    return quickH(data, k, start, pivot - 1);
  }*/
 
+ private int[] partitionDutch(int[] data, int lo, int hi){
+   int start = lo;
+   int end = hi;
+   // generate random pivot index
+   int pivot = (int)(Math.random() * (end - start + 1)) + start;
+
+
+   return new int[2];
+     //your code
+     //return an array [lt,gt]
+ }
+
  public static void main(String[] args) {
    int[] test = new int[] { 2, 3, 4, 6, 1, 8, 9, 5, 7 };
    // sorted { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
