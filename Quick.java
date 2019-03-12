@@ -79,12 +79,30 @@ public class Quick {
  }*/
 
  private int[] partitionDutch(int[] data, int lo, int hi){
-   int start = lo;
-   int end = hi;
    // generate random pivot index
-   int pivot = (int)(Math.random() * (end - start + 1)) + start;
-
-
+   int pivot = (int)(Math.random() * (hi - lo + 1)) + lo;
+   // swtiched pivot to start
+   int temp = data[lo];
+   if (pivot != lo) {
+     data[lo] = data[pivot];
+     data[pivot] = temp;
+     pivot = lo;
+     lo += 1;
+   }
+   int same = pivot;
+   while (lo != hi) {
+     if (data[lo] < data[pivot]) {
+       lo++;
+     } else if (data[lo] == data[pivot]) {
+       same = lo;
+       lo++;
+     } else {
+       int t = data[lo];
+       data[lo] = data[hi];
+       data[hi] = t;
+       hi--;
+     }
+   }
    return new int[2];
      //your code
      //return an array [lt,gt]
