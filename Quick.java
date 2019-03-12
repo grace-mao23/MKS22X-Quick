@@ -103,6 +103,13 @@ public class Quick {
        hi--;
      }
    }
+   if (data[start] == data[pivot]) {
+
+   } else if (data[start] < data[pivot]) {
+
+   }else {
+     
+   }
    return new int[2];
      //your code
      //return an array [lt,gt]
