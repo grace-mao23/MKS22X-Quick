@@ -91,6 +91,15 @@ public class Quick {
    return new int[] { lt, gt };
  }
 
+ public static void oldSort(int[] data, int lo, int hi) {
+   if (lo >= hi) {
+     return;
+   }
+   int p = partition(data, lo, hi);
+   oldSort(data, lo, p-1);
+   oldSort(data, p+1, hi);
+ }
+
  public static void quicksort(int[] data) {
    quickH(data, 0, data.length-1);
  }
@@ -115,7 +124,18 @@ public class Quick {
      System.out.println(Arrays.toString(t));
    }
    System.out.println(Arrays.toString(t)); */
-   Quick.quicksort(t);
-   System.out.println(Arrays.toString(t));
+   //Quick.quicksort(t);
+   //System.out.println(Arrays.toString(t));
+   int[] large = new int[50000];
+   for (int i = 0; i < large.length; i++) {
+     large[i] = 50;
+   }
+   large[23] = 23;
+   large[45] = 2;
+   large[1] = 600;
+   Quick.quicksort(large);
+   //Quick.oldSort(large, 0, large.length-1);
+  // System.out.println(Arrays.toString(large));
+  System.out.println("Done");
  }
 }
