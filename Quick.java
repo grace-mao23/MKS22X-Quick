@@ -51,19 +51,20 @@ public class Quick {
  public static int quickselect (int[] data, int k){
    int start = 0;
    int end = data.length - 1;
-   int pivot = partition(data, start, end);
-   while (pivot != k) {
+   //int pivot = partition(data, start, end);
+   int[] pivots = partitionDutch(data,start,end);
+   while (!(pivots[0] <= k && pivots[1] > k)) {
     // System.out.println(Arrays.toString(data)+": "+start+","+end);
-     if (pivot > k) {
-       end = pivot - 1;
+     if (pivots[0] > k) {
+       end = pivots[0] - 1;
      } else {
-       start = pivot + 1;
+       start = pivots[1];
      }
      //System.out.println(start+","+end);
     // System.out.println("Data: "+Arrays.toString(data));
-     pivot = partition(data, start, end);
+     pivots = partitionDutch(data, start, end);
    }
-   return data[pivot];
+   return data[pivots[0]];
  // return quickH(data,k,0,data.length-1);
  }
  /*
@@ -168,21 +169,22 @@ public class Quick {
  }
 
  public static void main(String[] args) {
-  /* int[] test = new int[] { 2, 3, 4, 6, 1, 8, 9, 5, 7 };
+   int[] test = new int[] { 2, 3, 4, 6, 1, 8, 9, 5, 7 };
+   int[] t = new int[] { 5, 3, 4, 5, 1, 2, 5, 7, 5, 6 };
    // sorted { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
-   System.out.println(Quick.quickselect(test, 0));
-   System.out.println(Quick.quickselect(test, 1));
-   System.out.println(Quick.quickselect(test, 2));
-   System.out.println(Quick.quickselect(test, 3));
-   System.out.println(Quick.quickselect(test, 4));
-   System.out.println(Quick.quickselect(test, 5));
-   System.out.println(Quick.quickselect(test, 6));
-   System.out.println(Quick.quickselect(test, 7));
-   System.out.println(Quick.quickselect(test, 8));
-  //  System.out.println(Quick.partition(test, 3, 8)); */
-  int[] t = new int[] { 5, 3, 4, 5, 1, 2, 5, 7, 5, 6 };
+   // sorted { 1, 2, 3, 4, 5, 5, 5, 5, 6, 7 }
+   System.out.println(Quick.quickselect(t, 0));
+   System.out.println(Quick.quickselect(t, 1));
+   System.out.println(Quick.quickselect(t, 2));
+   System.out.println(Quick.quickselect(t, 3));
+   System.out.println(Quick.quickselect(t, 4));
+   System.out.println(Quick.quickselect(t, 5));
+   System.out.println(Quick.quickselect(t, 6));
+   System.out.println(Quick.quickselect(t, 7));
+   System.out.println(Quick.quickselect(t, 8));
+  //  System.out.println(Quick.partition(test, 3, 8));
 //  System.out.println(Arrays.toString(Quick.partitionDutch(t, 0, 9)));
-  Quick.quicksort(t,0,9);
-  System.out.println(Arrays.toString(t));
+//  Quick.quicksort(t,0,9);
+  //System.out.println(Arrays.toString(t));
  }
 }
