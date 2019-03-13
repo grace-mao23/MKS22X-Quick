@@ -75,6 +75,22 @@ public class Quick {
    int gt = hi;
    int i = lt + 1;
    int pivot = lo;
+   while (i <= gt) {
+     if (data[i] < data[pivot]) {
+       data[lt] = data[i]; // switches current element to lt
+       lt++; // lt moves up one, since element switched to lt not equal to pivot
+       data[i] = data[pivot]; // current element becomes the pivot
+       i++; // move up the current element
+     } else if (data[i] == data[pivot]) {
+       i++; // just move up the current element, this one can stay where it is
+     } else { // data[i] > data[pivot]
+       int t = data[gt];
+       data[gt] = data[i]; // swap end of sequence of numbers same as pivot
+       data[i] = t;
+       gt--; // gt moves down one, since element switched to gt not equal to pivot
+     }
+   }
+   return new int[] { lt, gt };
  }
 
  public static void quicksort(int[] data, int lo, int hi) {
