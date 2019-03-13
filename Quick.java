@@ -73,10 +73,12 @@ public class Quick {
    int pivot = lo;
    while (i <= gt) {
      if (data[i] < data[pivot]) {
-       data[lt] = data[i]; // switches current element to lt
+       int t = data[lt];
+       data[lt] = data[i]; // switches lt and i
+       data[i] = t;
        lt++; // lt moves up one, since element switched to lt not equal to pivot
-       data[i] = data[pivot]; // current element becomes the pivot
        i++; // move up the current element
+       pivot++; // pivot moved
      } else if (data[i] == data[pivot]) {
        i++; // just move up the current element, this one can stay where it is
      } else { // data[i] > data[pivot]
@@ -103,22 +105,11 @@ public class Quick {
    int[] t = new int[] { 5, 3, 4, 5, 1, 2, 5, 7, 5, 6 };
    // sorted { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
    // sorted { 1, 2, 3, 4, 5, 5, 5, 5, 6, 7 }
-   for (int i = 0; i < 9; i++) {
+   System.out.println(Arrays.toString(Quick.partitionDutch(t, 0, 9)));
+  /* for (int i = 0; i < 9; i++) {
      System.out.println(Quick.quickselect(t,i));
      System.out.println(Arrays.toString(t));
    }
-  /* System.out.println(Quick.quickselect(t, 0));
-   System.out.println(Quick.quickselect(t, 1));
-   System.out.println(Quick.quickselect(t, 2));
-   System.out.println(Quick.quickselect(t, 3));
-   System.out.println(Quick.quickselect(t, 4));
-   System.out.println(Quick.quickselect(t, 5));
-   System.out.println(Quick.quickselect(t, 6));
-   System.out.println(Quick.quickselect(t, 7));
-   System.out.println(Quick.quickselect(t, 8));
-  //  System.out.println(Quick.partition(test, 3, 8));
-//  System.out.println(Arrays.toString(Quick.partitionDutch(t, 0, 9)));
-//  Quick.quicksort(t,0,9);
-  System.out.println(Arrays.toString(t)); */
+   System.out.println(Arrays.toString(t)); */
  }
 }
