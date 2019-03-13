@@ -81,7 +81,7 @@ public class Quick {
  private static int[] partitionDutch(int[] data, int lo, int hi){
    // generate random pivot index
    int pivot = (int)(Math.random() * (hi - lo + 1)) + lo;
-   System.out.println(pivot);
+//   System.out.println(pivot);
    // swtiched pivot to start
    int temp = data[lo];
    if (pivot != lo) {
@@ -92,7 +92,7 @@ public class Quick {
    }
    int same = pivot;
    while (lo != hi) {
-     System.out.println("A: "+Arrays.toString(data) + ","+same);
+  //   System.out.println("A: "+Arrays.toString(data) + ","+same);
      if (data[lo] < data[pivot]) {
        if (same != 0) {
          int t = data[same];
@@ -112,7 +112,7 @@ public class Quick {
      }
    }
    int[] result = new int[2];
-   System.out.println(Arrays.toString(data) + lo+","+same+","+hi);
+  // System.out.println(Arrays.toString(data) + lo+","+same+","+hi);
    if (same != 0) {
      if (data[lo] == data[pivot]) {
        hi++;
@@ -152,10 +152,19 @@ public class Quick {
        result[1] = pivot+1;
      }
    }
-   System.out.println(Arrays.toString(data));
+  // System.out.println(Arrays.toString(data));
    return result;
      //your code
      //return an array [lt,gt]
+ }
+
+ public static void quicksort(int[] data, int lo, int hi) {
+   if (lo >= hi) {
+     return;
+   }
+   int p = partition(data, lo, hi);
+   quicksort(data, lo, p-1);
+   quicksort(data, p+1, hi);
  }
 
  public static void main(String[] args) {
@@ -172,6 +181,8 @@ public class Quick {
    System.out.println(Quick.quickselect(test, 8));
   //  System.out.println(Quick.partition(test, 3, 8)); */
   int[] t = new int[] { 5, 3, 4, 5, 1, 2, 5, 7, 5, 6 };
-  System.out.println(Arrays.toString(Quick.partitionDutch(t, 0, 9)));
+//  System.out.println(Arrays.toString(Quick.partitionDutch(t, 0, 9)));
+  Quick.quicksort(t,0,9);
+  System.out.println(Arrays.toString(t));
  }
 }
