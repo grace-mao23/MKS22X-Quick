@@ -103,14 +103,29 @@ public class Quick {
        hi--;
      }
    }
-   if (data[start] == data[pivot]) {
-
-   } else if (data[start] < data[pivot]) {
-
-   }else {
-     
+   int[] result = new int[2];
+   if (data[lo] == data[pivot]) {
+     hi++;
+     lo = pivot;
+     int t = data[same-1];
+     data[same-1] = data[pivot];
+     data[pivot] = t;
+     result[0] = same;
+     result[1] = hi;
+   } else if (data[lo] < data[pivot]) {
+     int t = data[lo];
+     data[lo] = data[pivot];
+     data[pivot] = t;
+     result[0] = same;
+     result[1] = pivot;
+   } else {
+     int t = data[same-1];
+     data[same-1] = data[pivot];
+     data[pivot] = t;
+     result[0] = pivot;
+     result[1] = hi;
    }
-   return new int[2];
+   return result;
      //your code
      //return an array [lt,gt]
  }
