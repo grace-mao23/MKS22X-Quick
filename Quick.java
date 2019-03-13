@@ -71,7 +71,10 @@ public class Quick {
  }
 
  private static int[] partitionDutch(int[] data, int lo, int hi){
-   
+   int lt = lo;
+   int gt = hi;
+   int i = lt + 1;
+   int pivot = lo;
  }
 
  public static void quicksort(int[] data, int lo, int hi) {
