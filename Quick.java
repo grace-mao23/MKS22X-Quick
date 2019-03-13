@@ -51,23 +51,19 @@ public class Quick {
  public static int quickselect (int[] data, int k){
    int start = 0;
    int end = data.length - 1;
-   //int pivot = partition(data, start, end);
-   int[] pivots = partitionDutch(data,start,end);
-//   System.out.println(Arrays.toString(pivots));
-   while (!(pivots[0] <= k && pivots[1] > k) && start != end) {
-  //   System.out.println(Arrays.toString(data)+": "+start+","+end);
-     if (pivots[0] > k) {
-       end = pivots[0] - 1;
+   int pivot = partition(data, start, end);
+   while (pivot != k) {
+    // System.out.println(Arrays.toString(data)+": "+start+","+end);
+     if (pivot > k) {
+       end = pivot - 1;
      } else {
-       start = pivots[1];
+       start = pivot + 1;
      }
      //System.out.println(start+","+end);
     // System.out.println("Data: "+Arrays.toString(data));
-     pivots = partitionDutch(data, start, end);
+     pivot = partition(data, start, end);
    }
-  // System.out.println(Arrays.toString(data)+": "+start+","+end);
-   return data[pivots[0]];
- // return quickH(data,k,0,data.length-1);
+   return data[pivot];
  }
 
  private static int[] partitionDutch(int[] data, int lo, int hi){
