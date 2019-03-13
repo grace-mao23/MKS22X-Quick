@@ -91,13 +91,17 @@ public class Quick {
    return new int[] { lt, gt };
  }
 
- public static void quicksort(int[] data, int lo, int hi) {
+ public static void quicksort(int[] data) {
+   quickH(data, 0, data.length-1);
+ }
+
+ public static void quickH(int[] data, int lo, int hi) {
    if (lo >= hi) {
      return;
    }
-   int p = partition(data, lo, hi);
-   quicksort(data, lo, p-1);
-   quicksort(data, p+1, hi);
+   int[] p = partitionDutch(data, lo, hi);
+   quickH(data, lo, p[0]-1);
+   quickH(data, p[1]+1, hi);
  }
 
  public static void main(String[] args) {
@@ -105,11 +109,13 @@ public class Quick {
    int[] t = new int[] { 5, 3, 4, 5, 1, 2, 5, 7, 5, 6 };
    // sorted { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
    // sorted { 1, 2, 3, 4, 5, 5, 5, 5, 6, 7 }
-   System.out.println(Arrays.toString(Quick.partitionDutch(t, 0, 9)));
+  // System.out.println(Arrays.toString(Quick.partitionDutch(t, 0, 9)));
   /* for (int i = 0; i < 9; i++) {
      System.out.println(Quick.quickselect(t,i));
      System.out.println(Arrays.toString(t));
    }
    System.out.println(Arrays.toString(t)); */
+   Quick.quicksort(t);
+   System.out.println(Arrays.toString(t));
  }
 }
