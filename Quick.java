@@ -160,6 +160,18 @@ public class Quick {
      //return an array [lt,gt]
  }
 
+ public static void insertionSort(int[] data, int lo, int hi) {
+   for (int i = lo+1; i <= hi; i++) {
+     int current = data[i];
+     int j = i-1;
+     while (j >= lo && data[j] > current) {
+       data[j+1] = data[j];
+       j--;
+     }
+     data[j+1] = current;
+   }
+ }
+
  public static void quicksort(int[] data, int lo, int hi) {
    if (lo >= hi) {
      return;
@@ -172,9 +184,10 @@ public class Quick {
  public static void main(String[] args) {
    int[] test = new int[] { 2, 3, 4, 6, 1, 8, 9, 5, 7 };
    int[] t = new int[] { 5, 3, 4, 5, 1, 2, 5, 7, 5, 6 };
+   Quick.insertionSort(test, 1, 5);
    // sorted { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
    // sorted { 1, 2, 3, 4, 5, 5, 5, 5, 6, 7 }
-   System.out.println(Quick.quickselect(t, 0));
+  // System.out.println(Quick.quickselect(t, 0));
 /*   System.out.println(Quick.quickselect(t, 1));
    System.out.println(Quick.quickselect(t, 2));
    System.out.println(Quick.quickselect(t, 3));
@@ -186,6 +199,6 @@ public class Quick {
   //  System.out.println(Quick.partition(test, 3, 8));
 //  System.out.println(Arrays.toString(Quick.partitionDutch(t, 0, 9)));
 //  Quick.quicksort(t,0,9);
-  System.out.println(Arrays.toString(t));
+  System.out.println(Arrays.toString(test));
  }
 }
