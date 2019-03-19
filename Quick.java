@@ -57,115 +57,47 @@ public class Quick {
  public static int quickselect (int[] data, int k){
    int start = 0;
    int end = data.length - 1;
-   //int pivot = partition(data, start, end);
-   int[] pivots = partitionDutch(data,start,end);
-   while (!(pivots[0] <= k && pivots[1] > k)) {
-     System.out.println(Arrays.toString(data)+": "+start+","+end);
-     if (pivots[0] > k) {
-       end = pivots[0] - 1;
+   int pivot = partition(data, start, end);
+   while (pivot != k) {
+    // System.out.println(Arrays.toString(data)+": "+start+","+end);
+     if (pivot > k) {
+       end = pivot - 1;
      } else {
-       start = pivots[1];
+       start = pivot + 1;
      }
      //System.out.println(start+","+end);
     // System.out.println("Data: "+Arrays.toString(data));
-     pivots = partitionDutch(data, start, end);
+     pivot = partition(data, start, end);
    }
-   System.out.println(Arrays.toString(data)+": "+start+","+end);
-   return data[pivots[0]];
- // return quickH(data,k,0,data.length-1);
+   return data[pivot];
  }
- /*
- public static int quickH(int[] data, int k, int start, int end) {
-   int pivot = partition(data,start,end);
-   if (pivot == k) {
-     return data[pivot];
-   }
-   if (pivot < k) {
-     return quickH(data, k, pivot + 1, end);
-   }
-   return quickH(data, k, start, pivot - 1);
- }*/
 
  private static int[] partitionDutch(int[] data, int lo, int hi){
-   // generate random pivot index
-   int pivot = (int)(Math.random() * (hi - lo + 1)) + lo;
-//   System.out.println(pivot);
-   // swtiched pivot to start
-   int temp = data[lo];
-   if (pivot != lo) {
-     data[lo] = data[pivot];
-     data[pivot] = temp;
-     pivot = lo;
-     lo += 1;
-   }
-   int same = pivot;
-   while (lo != hi) {
-  //   System.out.println("A: "+Arrays.toString(data) + ","+same);
-     if (data[lo] < data[pivot]) {
-       if (same != 0) {
-         int t = data[same];
-         data[same] = data[lo];
-         data[lo] = t;
-         same++;
-       }
-       lo++;
-     } else if (data[lo] == data[pivot]) {
-       if (same == 0) same = lo;
-       lo++;
-     } else {
-       int t = data[lo];
-       data[lo] = data[hi];
-       data[hi] = t;
-       hi--;
+   int lt = lo;
+   int gt = hi;
+   int i = lt + 1;
+   int pivot = lo;
+   while (i <= gt) {
+     if (data[i] < data[pivot]) {
+       int t = data[lt];
+       data[lt] = data[i]; // switches lt and i
+       data[i] = t;
+       lt++; // lt moves up one, since element switched to lt not equal to pivot
+       i++; // move up the current element
+       pivot++; // pivot moved
+     } else if (data[i] == data[pivot]) {
+       i++; // just move up the current element, this one can stay where it is
+     } else { // data[i] > data[pivot]
+       int t = data[gt];
+       data[gt] = data[i]; // swap end of sequence of numbers same as pivot
+       data[i] = t;
+       gt--; // gt moves down one, since element switched to gt not equal to pivot
      }
    }
-   int[] result = new int[2];
-  // System.out.println(Arrays.toString(data) + lo+","+same+","+hi);
-   if (same != 0) {
-     if (data[lo] == data[pivot]) {
-       hi++;
-       lo = pivot;
-       int t = data[same-1];
-       data[same-1] = data[pivot];
-       data[pivot] = t;
-       result[0] = same-1;
-       result[1] = hi;
-     } else if (data[lo] < data[pivot]) {
-       int t = data[lo];
-       data[lo] = data[pivot];
-       data[pivot] = t;
-       result[0] = same;
-       result[1] = pivot;
-     } else {
-       int t = data[same-1];
-       data[same-1] = data[pivot];
-       data[pivot] = t;
-       result[0] = pivot;
-       result[1] = hi;
-     }
-   } else {
-     if (data[lo] <= data[pivot]) {
-       //System.out.println("blah");
-       int t = data[lo];
-       data[lo] = data[pivot];
-       data[pivot] = t;
-       pivot = lo;
-     } else {
-      // System.out.println("lah");
-       int t = data[lo-1];
-       data[lo-1] = data[pivot];
-       data[pivot] = t;
-       pivot = lo-1;
-       result[0] = pivot;
-       result[1] = pivot+1;
-     }
-   }
-  // System.out.println(Arrays.toString(data));
-   return result;
-     //your code
-     //return an array [lt,gt]
+   return new int[] { lt, gt };
  }
 
+<<<<<<< HEAD
  private static void insertionSort(int[] data, int lo, int hi) {
    for (int i = lo+1; i <= hi; i++) {
      int current = data[i];
@@ -280,6 +212,63 @@ public class Quick {
       System.out.println("PASS Case "+name(type)+"\t array, size:"+start.length+"\t"+elapsedTime/1000.0+"sec ");
     } else{
       System.out.println("FAIL ! ERROR ! "+name(type)+" array, size:"+size+"  ERROR!");
+=======
+ public static void oldSort(int[] data, int lo, int hi) {
+   if (lo >= hi) {
+     return;
+   }
+   int p = partition(data, lo, hi);
+   oldSort(data, lo, p-1);
+   oldSort(data, p+1, hi);
+ }
+
+ public static void quicksort(int[] data) {
+   quickH(data, 0, data.length-1);
+ }
+
+ public static void quickH(int[] data, int lo, int hi) {
+   if (lo >= hi) {
+     return;
+   }
+   int[] p = partitionDutch(data, lo, hi);
+   quickH(data, lo, p[0]-1);
+   quickH(data, p[1]+1, hi);
+ }
+
+
+ public static void main(String[]args){
+   System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
+   int[]MAX_LIST = {1000000000,500,10};
+   for(int MAX : MAX_LIST) {
+      for(int size = 31250; size < 2000001; size*=2) {
+        long qtime=0;
+        long btime=0;
+        //average of 5 sorts.
+        for(int trial = 0 ; trial <=5; trial++){
+          int []data1 = new int[size];
+          int []data2 = new int[size];
+          for(int i = 0; i < data1.length; i++) {
+            data1[i] = (int)(Math.random()*MAX);
+            data2[i] = data1[i];
+          }
+          long t1,t2;
+          t1 = System.currentTimeMillis();
+          Quick.quicksort(data2);
+          t2 = System.currentTimeMillis();
+          qtime += t2 - t1;
+          t1 = System.currentTimeMillis();
+          Arrays.sort(data1);
+          t2 = System.currentTimeMillis();
+          btime+= t2 - t1;
+          if(!Arrays.equals(data1,data2)) {
+            System.out.println("FAIL TO SORT!");
+            System.exit(0);
+          }
+        }
+        System.out.println(size +"\t\t"+MAX+"\t"+1.0*qtime/btime);
+      }
+      System.out.println();
+>>>>>>> 71742cdedad0c9c197387ffb99c49e7de513711e
     }
   }
 }
