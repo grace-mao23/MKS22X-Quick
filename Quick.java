@@ -1,8 +1,14 @@
 import java.util.*;
 
 public class Quick {
+  // testing stuff
+  private static final int INCREASE = 0;
+  private static final int DECREASE = 1;
+  private static final int STANDARD = 2;
+  private static final int SMALL_RANGE = 3;
+  // end of testing stuff
 
-  public static int partition (int [] data, int start, int end) {
+  public static int partition (int[] data, int start, int end) {
    // generate random pivot index
    int pivot = (int)(Math.random() * (end - start + 1)) + start;
   // System.out.println("Pivot: " +pivot);
@@ -160,7 +166,7 @@ public class Quick {
      //return an array [lt,gt]
  }
 
- public static void insertionSort(int[] data, int lo, int hi) {
+ private static void insertionSort(int[] data, int lo, int hi) {
    for (int i = lo+1; i <= hi; i++) {
      int current = data[i];
      int j = i-1;
@@ -176,29 +182,104 @@ public class Quick {
    if (lo >= hi) {
      return;
    }
-   int p = partition(data, lo, hi);
-   quicksort(data, lo, p-1);
-   quicksort(data, p+1, hi);
+   if ((hi-lo+1) < 10) {
+     insertionSort(data,lo,hi);
+   } else {
+     int p = partition(data, lo, hi);
+     quicksort(data, lo, p-1);
+     quicksort(data, p+1, hi);
+   }
+  // int p = partition(data, lo, hi);
+  // quicksort(data, lo, p-1);
+  // quicksort(data, p+1, hi);
  }
 
- public static void main(String[] args) {
+ public static void quicksort(int[] data) {
+   quicksort(data, 0, data.length-1);
+ }
+
+ /*public static void main(String[] args) {
    int[] test = new int[] { 2, 3, 4, 6, 1, 8, 9, 5, 7 };
    int[] t = new int[] { 5, 3, 4, 5, 1, 2, 5, 7, 5, 6 };
-   Quick.insertionSort(test, 1, 5);
+  // Quick.insertionSort(test, 1, 5);
    // sorted { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
    // sorted { 1, 2, 3, 4, 5, 5, 5, 5, 6, 7 }
   // System.out.println(Quick.quickselect(t, 0));
-/*   System.out.println(Quick.quickselect(t, 1));
+   System.out.println(Quick.quickselect(t, 1));
    System.out.println(Quick.quickselect(t, 2));
    System.out.println(Quick.quickselect(t, 3));
    System.out.println(Quick.quickselect(t, 4));
    System.out.println(Quick.quickselect(t, 5));
    System.out.println(Quick.quickselect(t, 6));
    System.out.println(Quick.quickselect(t, 7));
-   System.out.println(Quick.quickselect(t, 8));*/
+   System.out.println(Quick.quickselect(t, 8));
   //  System.out.println(Quick.partition(test, 3, 8));
 //  System.out.println(Arrays.toString(Quick.partitionDutch(t, 0, 9)));
 //  Quick.quicksort(t,0,9);
   System.out.println(Arrays.toString(test));
- }
+}*/
+  private static String name(int i){
+    if(i==INCREASE)return "Increassing";
+    if(i==DECREASE)return "Decreassing";
+    if(i==STANDARD)return "Normal Random";
+    if(i==SMALL_RANGE)return "Random with Few Values";
+    return "Error categorizing array";
+
+  }
+
+  private static int create(int min, int max){
+    return min + (int)(Math.random()*(max-min));
+  }
+
+  private static int[] makeArray(int size,int type){
+    int[] ans = new int[size];
+    if(type == STANDARD){
+      for(int i = 0; i < size; i++){
+        ans[i]= create(-1000000,1000000);
+      }
+    } else if(type == INCREASE){
+      int current = -5 * size;
+      for(int i = 0; i < size; i++){
+        ans[i]= create(current,current + 10);
+        current += 10;
+      }
+    } else if(type == DECREASE){
+      int current = 5 * size;
+      for(int i = 0; i < size; i++){
+        ans[i]= create(current,current + 10);
+        current -= 10;
+      }
+    } else if(type == SMALL_RANGE){
+      for(int i = 0; i < size; i++){
+        ans[i]= create(-5,5);
+      }
+    } else {
+      ans = new int[0];//empty is default
+    }
+    return ans;
+  }
+
+  public static void main(String[]args){
+    if(args.length < 2)return;
+
+    int size =  Integer.parseInt(args[0]);
+    int type =   Integer.parseInt(args[1]);
+
+    int[] start = makeArray(size,type);
+    int[] result = Arrays.copyOf(start,start.length);
+    Arrays.sort(result);
+
+    long startTime = System.currentTimeMillis();
+    /*
+     * Test your sort here //yoursort(start);
+     * Add code to switch which sort is tested by changing one of the args!
+     */
+    Quick.quicksort(start);
+    long elapsedTime = System.currentTimeMillis() - startTime;
+    if(Arrays.equals(start,result)){
+      System.out.println("PASS Case "+name(type)+"\t array, size:"+start.length+"\t"+elapsedTime/1000.0+"sec ");
+    } else{
+      System.out.println("FAIL ! ERROR ! "+name(type)+" array, size:"+size+"  ERROR!");
+    }
+  }
 }
