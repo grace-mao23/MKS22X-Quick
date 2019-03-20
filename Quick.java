@@ -97,7 +97,6 @@ public class Quick {
    return new int[] { lt, gt };
  }
 
-<<<<<<< HEAD
  private static void insertionSort(int[] data, int lo, int hi) {
    for (int i = lo+1; i <= hi; i++) {
      int current = data[i];
@@ -114,7 +113,7 @@ public class Quick {
    if (lo >= hi) {
      return;
    }
-   if ((hi-lo+1) < 10) {
+   if ((hi-lo+1) < 100) {
      insertionSort(data,lo,hi);
    } else {
      int p = partition(data, lo, hi);
@@ -212,31 +211,11 @@ public class Quick {
       System.out.println("PASS Case "+name(type)+"\t array, size:"+start.length+"\t"+elapsedTime/1000.0+"sec ");
     } else{
       System.out.println("FAIL ! ERROR ! "+name(type)+" array, size:"+size+"  ERROR!");
-=======
- public static void oldSort(int[] data, int lo, int hi) {
-   if (lo >= hi) {
-     return;
-   }
-   int p = partition(data, lo, hi);
-   oldSort(data, lo, p-1);
-   oldSort(data, p+1, hi);
- }
-
- public static void quicksort(int[] data) {
-   quickH(data, 0, data.length-1);
- }
-
- public static void quickH(int[] data, int lo, int hi) {
-   if (lo >= hi) {
-     return;
-   }
-   int[] p = partitionDutch(data, lo, hi);
-   quickH(data, lo, p[0]-1);
-   quickH(data, p[1]+1, hi);
- }
+    }
+  }
 
 
- public static void main(String[]args){
+ /*public static void main(String[]args){
    System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
    int[]MAX_LIST = {1000000000,500,10};
    for(int MAX : MAX_LIST) {
@@ -268,7 +247,6 @@ public class Quick {
         System.out.println(size +"\t\t"+MAX+"\t"+1.0*qtime/btime);
       }
       System.out.println();
->>>>>>> 71742cdedad0c9c197387ffb99c49e7de513711e
     }
-  }
+  }*/
 }
